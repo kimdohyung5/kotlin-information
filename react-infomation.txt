@@ -1,0 +1,10 @@
+동시에 실행시킬때의 구성방법.
+---------------------------------------------------------------------------------
+"dev": "concurrently \"npm run backend\" npm run start --prefix client\""
+
+"start": "node index.js",
+"server": "nodemon index.js",
+"client": "npm run start --prefix client",
+"dev": "concurrently \"npm run server\" \"npm run client\" \"npm run webhook\"",
+---------------------------------------------------------------------------------
+
