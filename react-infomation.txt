@@ -7,4 +7,9 @@
 "client": "npm run start --prefix client",
 "dev": "concurrently \"npm run server\" \"npm run client\" \"npm run webhook\"",
 ---------------------------------------------------------------------------------
-
+"start": "node index.js",
+"backend": "nodemon index.js",
+"frontend": "npm run front --prefix client",
+"dev": "concurrently \"npm run backend\"  \"npm run start --prefix client\""
+---------------------------------------------------------------------------------
+    
