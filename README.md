@@ -12,3 +12,7 @@
 
 
 https://create-react-app.dev/docs/importing-a-component/#absolute-imports
+
+2) parser만들기 참고 자료.
+   https://wani.kr/posts/2020/02/11/make-parser-1/
+   https://wani.kr/posts/2020/02/22/make-parser-2/
