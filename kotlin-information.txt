@@ -1,0 +1,27 @@
+
+on ActivityResult의 대안 을 어떻게 사용할지를 보여준다.
+
+class MainActivity : AppCompatActivity() {
+
+    val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(binding.root)
+
+        // onActivityResult의 대안
+        val activityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == RESULT_OK) {
+                val message = it.data?.getStringExtra("returnValue")
+                Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+            }
+        }
+
+        val intent = Intent(this, SubActivity::class.java)
+        intent.putExtra("from1", "hello Bundle")
+        intent.putExtra("from2", 2021)
+
+        // startActivityForResult 의 대안
+        binding.btnStart.setOnClickListener { activityResult.launch(intent) }
+    }
+}
