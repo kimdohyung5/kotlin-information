@@ -63,5 +63,7 @@ galleryLauncher = registerForActivityResult(ActivityResultContracts.GetContent()
 storagePermission.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)    
     
     
+Paging3 테스트를 위한 데이터를 가져오는 URL
+https://picsum.photos/v2/list?page=1&limit=100
     
     
