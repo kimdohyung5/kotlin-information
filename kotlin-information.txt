@@ -119,3 +119,15 @@ object TrackerDataModule {
         )
     }
 }
+
+// Post로 데이터를 날릴때 사용하는 부분.
+@Post("signup")
+suspend fun postData(@Body equest: AuthRequest)
+
+@POST("signin")
+suspend fun signIn(@Body request: AuthRequest) : TokenResponse
+
+@GET("authenticate")
+suspend fun authenticate(
+	@Header("Authenticate") token: String
+)
