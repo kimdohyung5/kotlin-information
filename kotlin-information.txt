@@ -138,3 +138,9 @@ suspend fun authenticate(
     
     
     
+    TextView에 가운데 선 긋기
+if(isChecked) {
+            tvTodoTitle.paintFlags = tvTodoTitle.paintFlags or STRIKE_THRU_TEXT_FLAG
+        } else {
+            tvTodoTitle.paintFlags = tvTodoTitle.paintFlags and STRIKE_THRU_TEXT_FLAG.inv()
+        }    
