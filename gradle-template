@@ -9,7 +9,7 @@ buildscript {
     }
 }
 
-
+classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.5.0"
 
 
 
@@ -38,7 +38,13 @@ apply plugin: 'dagger.hilt.android.plugin'
 implementation "com.google.dagger:hilt-android:2.28-alpha"
 kapt "com.google.dagger:hilt-android-compiler:2.28-alpha"
     
-    
+// navigation
+implementation("androidx.navigation:navigation-fragment-ktx:2.5.0")
+implementation("androidx.navigation:navigation-ui-ktx:2.5.0")
+
+// navigation safeargs
+id("androidx.navigation.safeargs.kotlin")
+
 
 
 
