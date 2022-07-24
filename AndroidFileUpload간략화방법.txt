@@ -1,0 +1,10 @@
+val file  = File(imagepath)
+        val fileBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), file)
+        val filePart = MultipartBody.Part.createFormData("file", file.name, fileBody)
+
+
+를
+val filePart = MultipartBody.Part
+    .createFormData("file", file.name, file.asRequestBody)
+
+로 바꾸면 어떻게 될까 궁금함..
