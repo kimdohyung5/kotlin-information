@@ -62,8 +62,6 @@ apply plugin: 'dagger.hilt.android.plugin'
 implementation "com.google.dagger:hilt-android:2.28-alpha"
 kapt "com.google.dagger:hilt-android-compiler:2.28-alpha"
 
-implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
-
 // hiltViewModel in compose ex) aa = hiltViewModel()
 implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
     
@@ -74,7 +72,6 @@ implementation("androidx.navigation:navigation-ui-ktx:2.5.0")
 
 // navigation safeargs
 id("androidx.navigation.safeargs.kotlin")
-
 
 
 // Glide
