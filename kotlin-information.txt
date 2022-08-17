@@ -154,3 +154,31 @@ object MapStyle {
     }    
     """.trimIndent()
    }
+
+
+
+------
+retrofit에서 interceptor 설정하기
+val logger = HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BASIC
+        }
+        val interceptor = Interceptor { chain ->
+            with(chain) {
+                val newRequest = request().newBuilder()
+                    .addHeader("Authorization", "Token " + "xxxx")
+                    .build()
+                proceed(newRequest)
+            }
+        }
+        val okHttpClient = OkHttpClient.Builder()
+            .addInterceptor(logger)
+            .addInterceptor(interceptor)
+            .build()
+
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create( CoinPaprikaApi::class.java)
+	    
