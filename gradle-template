@@ -33,7 +33,7 @@ implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0")
 implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.0")
 
 // lifecycle : viewmodel compose
-implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.5.0")
+implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1")
 
 
 // viewModels 
