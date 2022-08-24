@@ -1,0 +1,3 @@
+1. kotlin - compose - 자체pagination- 불러온 데이터에서만 searching하기 - compose-animation
+   https://github.com/philipplackner/JetpackComposePokedex 
+2. kotlin - ?   
