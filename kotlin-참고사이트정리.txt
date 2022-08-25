@@ -5,5 +5,6 @@
    https://github.com/philipplackner/MVVMNewsApp (동영상도 있음)
    https://github.com/kimdohyung5/kotlin-newsapp-recyclerviewer-pagination (내가 구현중인 것 하다 말고 있음..)
    
-3.    
+3. kotlin - xml paging3 SwipeRefreshLayout 사용해서 paging을 처리함.
+   https://github.com/kimdohyung5/kotlin-paging3-clickitem-hilt ( 테스트 함.. )
    
