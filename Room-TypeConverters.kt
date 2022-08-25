@@ -17,8 +17,6 @@ class OrmConverter {
     fun toList(value: String) = Json.decodeFromString<List<String>>(value)
 }
 
-
-
 class Converters {
     @TypeConverter
     fun toBitmap(byteArray: ByteArray): Bitmap {
@@ -32,4 +30,15 @@ class Converters {
     }
 }
 
+class Converters {
+    @TypeConverter
+    fun fromTimestamp(value: Long?): Date? {
+        return value?.let { Date(it) }
+    }
+    
+    @TypeConverter
+    fun dateToTimestamp(date: Date?): Long? {
+        return date?.time?.toLong()
+    }
+}
 
