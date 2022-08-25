@@ -1,3 +1,9 @@
 1. kotlin - compose - 자체pagination- 불러온 데이터에서만 searching하기 - compose-animation
    https://github.com/philipplackner/JetpackComposePokedex 
-2. kotlin - ?   
+   
+2. kotlin - xml -자체pagination - local, network둘다 구현됨. pagination만 가져다가 알맞게 구현하면 좋을듯.
+   https://github.com/philipplackner/MVVMNewsApp 
+   https://github.com/kimdohyung5/kotlin-newsapp-recyclerviewer-pagination
+   
+3.    
+   
