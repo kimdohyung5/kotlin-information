@@ -8,7 +8,8 @@
 3. kotlin - xml paging3 SwipeRefreshLayout 사용해서 paging을 처리함.
    https://github.com/kimdohyung5/kotlin-paging3-clickitem-hilt ( 테스트 함.. )
    https://github.com/stevdza-san/Paging3JetpackComposeDemo( Youtube에 강의도 있고 참고 할만하다.
-                                                             그리고, 검색에서는 currentPage를 넘기지 않아서 계속 같은 것을 나오는데, 그건 수정하면 됨.)
+        그리고, 검색에서는 currentPage를 넘기지 않아서 계속 같은 것을 나오는데, 그건 수정하면 됨.)
+        수정된 버전은 : https://github.com/kimdohyung5/kotlin-information/blob/main/KPaging3Test.zip 에 연결이 되어 있음.
                                                              
                                                              
    
