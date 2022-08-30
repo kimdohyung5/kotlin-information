@@ -208,3 +208,18 @@ val logger = HttpLoggingInterceptor().apply {
 				}			
 			}
 		}
+
+10. list에서 group by를 하면 list에서 map이 만들어지고, 지정된 group by된 것으로 key가 
+    생기고, value로 list가 생성이된다. 아래의 예로 테스트 하면 된다.
+    val lists = (1..99).map { "${it}" }
+    val copied = lists.mapIndexed { index, value ->
+        AData( index = index, name = "index=${index} value=${value}")
+    }.groupBy {
+        it.index / 10
+    }    
+    println("index ${copied} ")
+    val copied2 = copied.mapValues {
+        it.value.map { it.name}
+    }
+    
+    
