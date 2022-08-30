@@ -1,3 +1,5 @@
+
+1. 첫번째 방법.
 val file  = File(imagepath)
         val fileBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), file)
         val filePart = MultipartBody.Part.createFormData("file", file.name, fileBody)
@@ -7,4 +9,16 @@ val file  = File(imagepath)
 val filePart = MultipartBody.Part
     .createFormData("file", file.name, file.asRequestBody)
 
-로 바꾸면 어떻게 될까 궁금함..
+
+2. 두번째 방법
+suspend fun uploadImage(file:File): Boolean {
+    FileApi.instance.uploadImage(
+        image = MultipartBody.Part
+         .createFormData(
+            name: "image",
+            file.name,
+            file.asRequestBody()
+        )
+    )
+
+}
