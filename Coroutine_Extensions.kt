@@ -18,3 +18,6 @@ viewLifeOwner.lifecycleScope.launchWhenStarted {
 		adapter.submitList(articles)
 	}	
 }
+
+val breakingNews = repository.getBreakingNews()
+        .stateIn(viewModelScope, SharingStarted.Lazily, null)
