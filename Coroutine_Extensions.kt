@@ -11,3 +11,10 @@ fun <T> SearchFragment.collectLatestStateFlow(flow: Flow<T>, collect: suspend (T
         }
     }
 }
+
+// 위로 이용하는 것이 좋을 듯 하다... ( 위랑 동일한 코드이다.. )
+viewLifeOwner.lifecycleScope.launchWhenStarted {
+	viewModel.breakingNews.collect { articles ->
+		adapter.submitList(articles)
+	}	
+}
