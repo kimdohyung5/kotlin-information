@@ -48,6 +48,46 @@ class MyViewModel : ViewModel() {
     }
 }
 
+2. Manager형식으로 데이터를 관리한다. (향후에 이렇게 사용을 하자..)
+
+private const val TAG = "PreferencesManager"
+enum class SortOrder{ BY_NAME, BY_DATE }
+data class FilterPreferences(val sortOrder: SortOrder, val hideCompleted: Boolean)
+private val Context.dataStore by preferencesDataStore("user_preferences")
+@Singleton
+class PreferencesManager @Inject constructor(@ApplicationContext context: Context){
+    val dataStore = context.dataStore    
+    val preferencesFlow = dataStore.data
+        .catch { exception ->
+            if( exception is IOException ) {
+                Log.e(TAG, "Error reading preferences", exception)
+                emit(emptyPreferences())
+            } else {
+                throw exception
+            }
+        }
+        .map { preferences ->
+            val sortOrder = SortOrder.valueOf(
+                preferences[PreferencesKeys.SORT_ORDER] ?: SortOrder.BY_DATE.name
+            )
+            val hideCompleted = preferences[PreferencesKeys.HIDE_COMPLETED] ?: false
+            
+            FilterPreferences(sortOrder, hideCompleted)
+        }
     
-    
+    suspend fun updateSortOrder(sortOrder: SortOrder) {
+        dataStore.edit{ preferences ->
+            preferences[PreferencesKeys.SORT_ORDER] = sortOrder.name
+        }
+    }    
+    suspend fun updateHideCompleted(hideCompleted: Boolean) {
+        dataStore.edit{ preferences ->
+            preferences[PreferencesKeys.HIDE_COMPLETED] = hideCompleted
+        }
+    }
+    private object PreferencesKeys {
+        val SORT_ORDER = stringPreferencesKey("sort_order")
+        val HIDE_COMPLETED = booleanPreferencesKey("hide_completed")
+    }
+}    
     
