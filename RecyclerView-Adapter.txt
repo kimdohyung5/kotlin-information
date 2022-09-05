@@ -1,0 +1,36 @@
+
+1) ListAdapter로 사용하기
+class TasksAdapter : ListAdapter<Task, TasksAdapter.TasksViewHolder>(DiffCallback()) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TasksViewHolder {
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = ItemTaskBinding.inflate(inflater, parent, false)
+        return TasksViewHolder(binding)
+    }
+    override fun onBindViewHolder(holder: TasksViewHolder, position: Int) {
+        val currentItem = getItem(position)
+        holder.bind( currentItem )
+    }
+    class TasksViewHolder(private val binding: ItemTaskBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind( task: Task ) {
+            binding.apply {
+                checkBoxCompleted.isChecked = task.completed
+                textViewName.text = task.name
+                textViewName.paint.isStrikeThruText = task.completed
+                labelPriority.isVisible = task.important
+            }
+        }        
+    }
+    class DiffCallback : DiffUtil.ItemCallback<Task>() {
+        override fun areItemsTheSame(oldItem: Task, newItem: Task): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: Task, newItem: Task): Boolean {
+            return oldItem == newItem
+        }
+    }
+}
+
+2) ??? 
+
