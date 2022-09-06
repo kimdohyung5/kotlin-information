@@ -1,0 +1,31 @@
+Fragment에서 menu설정하기. 
+	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val menuHost: MenuHost = requireActivity()
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.list_fragment_menu, menu)
+
+                val search = menu.findItem(R.id.menu_search)
+                val searchView = search.actionView as? SearchView
+                searchView?.isSubmitButtonEnabled = true
+                searchView?.setOnQueryTextListener(this@ListFragment)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                when (menuItem.itemId) {
+                    R.id.menu_delete_all -> confirmRemoval()
+                    R.id.menu_priority_high ->
+                        mToDoViewModel.sortByHighPriority.observe(viewLifecycleOwner) {
+                            adapter.setData(it)
+                        }
+                    R.id.menu_priority_low ->
+                        mToDoViewModel.sortByLowPriority.observe(viewLifecycleOwner) {
+                            adapter.setData(it)
+                        }
+                    android.R.id.home -> requireActivity().onBackPressed()
+                }
+                return true
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    }
