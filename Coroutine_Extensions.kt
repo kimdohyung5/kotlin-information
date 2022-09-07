@@ -21,3 +21,13 @@ viewLifeOwner.lifecycleScope.launchWhenStarted {
 
 val breakingNews = repository.getBreakingNews()
         .stateIn(viewModelScope, SharingStarted.Lazily, null)
+
+	
+// 또다른 케이스
+fun <T> FavoriteFragment.collectLatestStateFlow(flow: Flow<T>, collect: suspend (T) -> Unit ) {
+    viewLifecycleOwner.lifecycleScope.launch { 
+        viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            flow.collectLatest(collect)
+        }
+    }
+}
