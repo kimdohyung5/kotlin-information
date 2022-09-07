@@ -32,5 +32,41 @@ class TasksAdapter : ListAdapter<Task, TasksAdapter.TasksViewHolder>(DiffCallbac
     }
 }
 
-2) ??? 
+2) 위와 거의동일한 버전..
+class BookSearchAdapter : ListAdapter<Book, BookSearchViewHolder> (BookDiffCallback) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookSearchViewHolder {
+        return BookSearchViewHolder(
+            ItemBookPreviewBinding.inflate( LayoutInflater.from(parent.context), parent, false)
+        )
+    }
+    override fun onBindViewHolder(holder: BookSearchViewHolder, position: Int) {
+        val book = currentList[position]
+        holder.bind( book )
+    }
+    companion object {
+        private val BookDiffCallback = object: DiffUtil.ItemCallback<Book>() {
+            override fun areItemsTheSame(oldItem: Book, newItem: Book): Boolean {
+                return oldItem.isbn == newItem.isbn
+            }
+            override fun areContentsTheSame(oldItem: Book, newItem: Book): Boolean {
+                return oldItem == newItem
+            }
+        }
+    }
+}
+class BookSearchViewHolder(private val binding: ItemBookPreviewBinding) : RecyclerView.ViewHolder( binding.root ) {
+    fun bind(book: Book) {
+        val author = book.authors.toString().removeSurrounding("[", "]")
+        val publisher = book.publisher
+        val date = if (book.datetime.isNotEmpty()) book.datetime.substring(0, 10) else ""
+        binding.apply {
+            ivArticleImage.load( book.thumbnail )
+            tvTitle.text = book.title
+            tvAuthor.text = "$author | $publisher"
+            tvDatetime.text = date
+        }
+    }
+}
+
+3) ... ?
 
