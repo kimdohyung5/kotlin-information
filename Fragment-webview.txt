@@ -1,0 +1,31 @@
+class BookFragment: Fragment(R.layout.fragment_book) {
+
+    private lateinit var binding: FragmentBookBinding
+    
+    private val args by navArgs<BookFragmentArgs>()
+
+    @SuppressLint("SetJavaScriptEnabled")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val book = args.book 
+        binding = FragmentBookBinding.bind( view )
+        binding.webview.apply {
+            webViewClient = WebViewClient()
+            settings.javaScriptEnabled = true
+            loadUrl( book.url )
+        }
+    }
+
+    override fun onPause() {
+        binding.webview.onPause()
+        super.onPause()
+    }
+
+    override fun onResume() {
+        binding.webview.onResume()
+        super.onResume()
+    }
+}
+
+
