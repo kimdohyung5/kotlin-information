@@ -71,8 +71,8 @@ implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
     
     
 // navigation
-implementation("androidx.navigation:navigation-fragment-ktx:2.5.1")
-implementation("androidx.navigation:navigation-ui-ktx:2.5.1")
+implementation("androidx.navigation:navigation-fragment-ktx:2.5.2")
+implementation("androidx.navigation:navigation-ui-ktx:2.5.2")
 
 // navigation safeargs
 id("androidx.navigation.safeargs.kotlin")
