@@ -1,0 +1,109 @@
+1. interface 만들기
+interface Paginator<Key, Item> {
+    suspend fun loadNextItems()
+    fun reset()
+}
+
+2. interface 구현하기
+class DefaultPaginator < Key, Item>(
+    private val initialKey: Key,
+    private inline val onLoadUpdated: (Boolean) -> Unit,
+    private inline val onRequest: suspend (nextKey: Key) -> Result<List<Item>>,
+    private inline val getNextKey: suspend (List<Item>) -> Key,
+    private inline val onError: suspend (Throwable?) -> Unit,
+    private inline val onSuccess: suspend (items: List<Item>, newKey: Key) -> Unit
+) : Paginator<Key, Item> {
+
+    private var currentKey = initialKey
+    private var isMakingRequest = false
+    override suspend fun loadNextItems() {
+        if(isMakingRequest) return
+
+        isMakingRequest = true
+        onLoadUpdated(true)
+        val result = onRequest(currentKey)
+        isMakingRequest = false
+        val items = result.getOrElse {
+            onError(it)
+            onLoadUpdated(false)
+            return
+        }
+        currentKey = getNextKey(items)
+        onSuccess(items, currentKey)
+        onLoadUpdated(false )
+
+    }
+
+    override fun reset() {
+        currentKey = initialKey
+    }
+}
+
+3. 실제 사용하는 참고 부분
+@HiltViewModel
+class MainViewModel @Inject constructor(
+    private val repository: Repository
+): ViewModel() {
+
+    var state by mutableStateOf(ScreenState())
+
+    private val paginator = DefaultPaginator(
+        initialKey = state.page,
+        onLoadUpdated = {
+            state = state.copy(isLoading = it)
+        },
+        onRequest = { nextPage ->
+            repository.getItems(nextPage, 20)
+        },
+        getNextKey = {
+            state.page + 1
+        },
+        onError = {
+            state = state.copy(error = it?.localizedMessage)
+        },
+        onSuccess = { items, newKey ->
+            state = state.copy(
+                items = state.items + items,
+                page = newKey,
+                endReached = items.isEmpty()
+            )
+        }
+    )
+
+    init {
+        loadNextItems()
+    }
+
+    fun loadNextItems() {
+        viewModelScope.launch {
+            paginator.loadNextItems()
+        }
+    }
+}
+data class ScreenState(
+    val isLoading: Boolean = false,
+    val items: List<ListItem> = emptyList(),
+    val error: String? = null,
+    val endReached: Boolean = false,
+    val page: Int = 0
+)
+        
+4. 참고부분 2
+class Repository {
+    private val remoteDataSource = (1..100).map {
+        ListItem (
+            title = "Item $it",
+            description = "Description $it"
+        )
+    }
+    suspend fun getItems(page:Int, pageSize: Int ) : Result<List<ListItem>> {
+        delay(2000L)
+        val startingIndex = page * pageSize
+        return if(startingIndex + pageSize <= remoteDataSource.size) {
+            Result.success(
+                remoteDataSource.slice(startingIndex until startingIndex + pageSize)
+            )
+        } else Result.success( emptyList() )
+    }
+}      
+
