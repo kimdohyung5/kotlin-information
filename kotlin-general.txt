@@ -18,3 +18,8 @@ enum class Day(
         fun findByLabel(label: String) = LABEL_CACHE[label]
     }
 }
+
+2. 숫자에 0채우기
+fun Int.pad():String {
+    return this.toString().padStart(2, '0')
+}
