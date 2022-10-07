@@ -276,4 +276,15 @@ val status by connectivityObserver.observe().collectAsState(
 	initial = ConnectivityObserver.Status.Unavailable
 )
 
+compose사용시 권한 요청하는 예시
+---------------------------------------------------------------------------
+val launcher = rememberLauncherActivityForResult( 
+	contract = ActivityResultContracts.RequestPermission(),
+	onResult = { isGranted ->
+	
+	}
+}
+launcher.launch ( Manifest.permission.POST_NOTIFICATIONS )
+---------------------------------------------------------------------------
+
 
