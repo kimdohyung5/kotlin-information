@@ -44,3 +44,6 @@ class DefaultLocationClient(
         }
     }
 }
+
+2. repeatOnLifecycle은 포그라운드에서만 작업되는 코루틴 블록에서만 사용해야 한다.
+
