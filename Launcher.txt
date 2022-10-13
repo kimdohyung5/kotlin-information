@@ -19,3 +19,25 @@ if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
     launcher.launch(Manifest.permission.POST_NOTIFICATIONS)
 }
 
+3. 카메라 권한 획득예제
+<uses-permission android:name="android.permission.CAMERA" />
+
+var hasCamPermission by remember {
+	mutableStateOf(
+		ContextCompat.checkSelfPermission(
+			context,
+			Manifest.permission.CAMERA
+		) == PackageManager.PERMISSION_GRANTED
+	)
+}
+
+val launcher = rememberLauncherForActivityResult(
+	contract = ActivityResultContracts.RequestPermission(),
+	onResult = { granted ->
+		hasCamPermission = granted
+	}
+)
+LaunchedEffect(key1 = true) {
+	launcher.launch(Manifest.permission.CAMERA)
+}
+
