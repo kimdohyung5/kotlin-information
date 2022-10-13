@@ -123,4 +123,39 @@ class DataStoreModule(private val context : Context) {
     val text = "Sample"
     dataStoreModule.setText(text)
  }
+    
+4. 알기쉬운 방법 2
+
+val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "on_boarding_pref")
+class DataStoreRepository(context: Context) {
+
+    private object PreferencesKey {
+        val onBoardingKey = booleanPreferencesKey(name = "on_boarding_completed")
+    }
+
+    private val dataStore = context.dataStore
+
+    suspend fun saveOnBoardingState(completed: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[PreferencesKey.onBoardingKey] = completed
+        }
+    }
+
+    fun readOnBoardingState(): Flow<Boolean> {
+        return dataStore.data
+            .catch { exception ->
+                if (exception is IOException) {
+                    emit(emptyPreferences())
+                } else {
+                    throw exception
+                }
+            }
+            .map { preferences ->
+                val onBoardingState = preferences[PreferencesKey.onBoardingKey] ?: false
+                onBoardingState
+            }
+    }
+}
+
+5. 위에서 4번 방법이 가장 깔끔한것 같다.. 
 
