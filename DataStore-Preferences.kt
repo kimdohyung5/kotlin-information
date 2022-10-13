@@ -91,3 +91,34 @@ class PreferencesManager @Inject constructor(@ApplicationContext context: Contex
     }
 }    
     
+3. 가장 알기 쉬운 방식 
+class DataStoreModule(private val context : Context) {
+    private val Context.dataStore  by preferencesDataStore(name = "dataStore")
+    private val stringKey = stringPreferencesKey("textKey")
+	
+    val text : Flow<String> = context.dataStore.data
+        .catch { exception ->
+            if (exception is IOException) {
+                emit(emptyPreferences())
+            } else {
+                throw exception
+            }
+        }
+        .map {preferences ->
+            preferences[stringKey] ?: ""
+        }        
+    
+    suspend fun setText(text : String){
+        context.dataStore.edit { preferences ->
+            preferences[stringKey] = text
+        }
+    }
+}
+3.1 읽기 
+    val text = SampleApplication.getInstance().getDataStore().text.first()
+3.2 쓰기 
+    CoroutineScope(Dispatchers.Main).launch {
+    val text = "Sample"
+    SampleApplication.getInstance().getDataStore().setText(text)
+ }
+
