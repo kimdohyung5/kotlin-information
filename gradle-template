@@ -80,6 +80,9 @@ implementation("androidx.navigation:navigation-ui-ktx:2.5.2")
 // navigation safeargs
 id("androidx.navigation.safeargs.kotlin")
 
+// 옆의 오류가 있을경우 : java.lang.IllegalArgumentException: CreationExtras must have a value by `SAVED_STATE_REGISTRY_OWNER_KEY`
+implementation "androidx.navigation:navigation-compose:2.5.2"
+
 
 // Glide
 implementation("com.github.bumptech.glide:glide:4.13.0")
