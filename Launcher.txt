@@ -1,0 +1,9 @@
+1. 간단한 사용법
+val selectVideoLauncher = rememberLauncherForActivityResult(
+                    contract = ActivityResultContracts.GetContent(),
+                    onResult = { uri ->
+                        uri?.let(viewModel::addVideoUri)
+                    }
+                )				
+                
+selectVideoLauncher.launch("video/mp4")	
