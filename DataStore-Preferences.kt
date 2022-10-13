@@ -115,10 +115,10 @@ class DataStoreModule(private val context : Context) {
     }
 }
 3.1 읽기 
-    val text = SampleApplication.getInstance().getDataStore().text.first()
+    val text = DataStoreModule( appContext ).text.first()
 3.2 쓰기 
     CoroutineScope(Dispatchers.Main).launch {
     val text = "Sample"
-    SampleApplication.getInstance().getDataStore().setText(text)
+    DataStoreModule( appContext ).setText(text)
  }
 
