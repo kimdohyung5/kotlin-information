@@ -7,3 +7,15 @@ val selectVideoLauncher = rememberLauncherForActivityResult(
                 )				
                 
 selectVideoLauncher.launch("video/mp4")	
+
+2. 간단한 사용법 2
+val launcher = rememberLauncherForActivityResult(
+                        contract = ActivityResultContracts.RequestPermission(),
+                        onResult = { isGranted ->
+                            hasNotificationPermission = isGranted
+                        }
+                    )
+if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+    launcher.launch(Manifest.permission.POST_NOTIFICATIONS)
+}
+
