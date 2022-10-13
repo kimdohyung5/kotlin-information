@@ -114,11 +114,13 @@ class DataStoreModule(private val context : Context) {
         }
     }
 }
-3.1 읽기 
-    val text = DataStoreModule( appContext ).text.first()
-3.2 쓰기 
+3.1 참조하기 
+    val dataStoreModule = DataStoreModule( appContext )	
+3.2 읽기     
+    val text = dataStoreModule.text.first()
+3.3 쓰기 
     CoroutineScope(Dispatchers.Main).launch {
     val text = "Sample"
-    DataStoreModule( appContext ).setText(text)
+    dataStoreModule.setText(text)
  }
 
