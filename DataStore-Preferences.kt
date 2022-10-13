@@ -125,7 +125,6 @@ class DataStoreModule(private val context : Context) {
  }
     
 4. 알기쉬운 방법 2
-
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "on_boarding_pref")
 class DataStoreRepository(context: Context) {
 
@@ -156,6 +155,18 @@ class DataStoreRepository(context: Context) {
             }
     }
 }
+di에서 
+AppModule.kt
+	@Module
+	@InstallIn(SingletonComponent::class)
+	object AppModule {
+	    @Provides
+	    @Singleton
+	    fun provideDataStoreRepository(
+		@ApplicationContext context: Context
+	    ) = DataStoreRepository(context = context)
+	}
+
 
 5. 위에서 4번 방법이 가장 깔끔한것 같다.. 
 
