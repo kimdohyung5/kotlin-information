@@ -10,6 +10,8 @@
         google()
         mavenCentral()
     }
+    
+    
 //    object PluginVersion {
 //        const val GRADLE = "4.2.2"
 //        const val KOTLIN = "1.5.21"
@@ -18,6 +20,8 @@
 //        implementation("com.android.tools.build:gradle:${PluginVersion.GRADLE}")
 //        implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:${PluginVersion.KOTLIN}")
 //    }
+
+
     
 5. buildSrc/src/main/kotlin/Dependency.kt 생성
     아래의 내용입력 
