@@ -2,22 +2,27 @@
 리턴값을 구분하기 위해서
 아래와 같이 작성한다.
 
-import javax.inject.Qualifier
-
+1) 형식 우선 선언하기
 @Retention(AnnotationRetention.BINARY)
 @Qualifier
 annotation class DefaultDispatcher
 
-@Retention(AnnotationRetention.BINARY)
-@Qualifier
-annotation class IoDispatcher
+2) 제공하는 부분 적시 
+    @DefaultDispatcher
+    @Provides
+    fun providesDefaultDispatcher(): CoroutineDispatcher = Dispatchers.Default
 
-@Retention(AnnotationRetention.BINARY)
-@Qualifier
-annotation class MainDispatcher
-
-@Retention(AnnotationRetention.BINARY)
-@Qualifier
-annotation class MainImmediateDispatcher
+3) 사용하기 
+  class GetStaffUseCase @Inject constructor(
+      private val conferenceRepository: ConferenceRepository,
+      @DefaultDispatcher dispatcher: CoroutineDispatcher,
+  ) : NonParamCoroutineUseCase<List<User>>(dispatcher) {
+      override suspend fun execute(): List<User> {
+          return conferenceRepository.getStaff()
+              .sortedBy { it.name }
+      }
+  }
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 
 or @Named("xxxx") 
