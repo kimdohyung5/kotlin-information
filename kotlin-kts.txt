@@ -9,6 +9,8 @@
     repositories {
         google()
         mavenCentral()
+        // 아래의 경로를 사용할수 도 있다.. 
+        // gradlePluginPortal()
     }
     
     
