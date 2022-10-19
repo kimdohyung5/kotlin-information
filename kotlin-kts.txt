@@ -50,3 +50,16 @@
     }
     
     
+    
+    settings.gradle의 설정부분
+    rootProject.name = "myhello"
+    include ':app'
+    include ':libs:mylib1'
+    include ':libs:mylib2'
+    include ':libs:mylib3'
+
+    // 논리적인것은 아래와 같이 처리한다. 
+    project(":libs:mylib1").projectDir = file("./mylib1")
+    project(":libs:mylib2").projectDir = file("./mylib2")
+    project(":libs:mylib3").projectDir = file("./mylib3")
+
