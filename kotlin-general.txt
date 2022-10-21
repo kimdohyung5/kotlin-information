@@ -33,3 +33,6 @@ fun formatDateTime(timestamp: Int): String {
 fun formatDecimals(item: Double): String {
     return " %.0f".format(item)
 }
+
+date: LocalDate
+val result: String = DateTimeFormatter.ofPattern("dd LLLL").format(date)
