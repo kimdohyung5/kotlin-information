@@ -36,3 +36,38 @@ fun formatDecimals(item: Double): String {
 
 date: LocalDate
 val result: String = DateTimeFormatter.ofPattern("dd LLLL").format(date)
+
+4. Result형식 알아보기
+   Result<T>로 된 값을 리턴받으면 onSuccess, onFailure를 통해서 T또는 throwable을 리턴받아서 
+   처리할수 있다.
+fun GetResult(input: String) : Result<String> {
+    /*
+    if(input == "success") {
+        return Result.success("S")
+    }
+    return Result.failure(Exception("xxxx"))
+     */
+    return runCatching {
+        if(input == "success") {            
+            "Hello"
+        }
+        else {            
+            throw Exception("forRunCatching")
+        }
+    }
+}
+
+fun main() {    
+    val result = GetResult("success")
+    result.onSuccess {
+        println("SSSS ${it}")
+    }.onFailure {
+        println("FFFF")
+    }
+    val result2 = GetResult("failure")
+    result2.onSuccess {
+        println("SSSS")
+    }.onFailure { e ->
+        println("FFFF ${e.message}")
+    }
+}
