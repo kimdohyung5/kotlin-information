@@ -1,0 +1,33 @@
+// 어떻게 사용할지 보여주는 간략한 예제..
+
+class SettingPreference(private val context: Context) {
+	val Context.dataStore: DataStore<Preferences> by  preferencesDataStore(name = "Settings")
+	val LANGUAGE_PREF = intPreferencesKey("LANGUAGE_PREF")
+	
+	suspend fun setLanguage(param: Int) {		
+		context.dataStore.edit {		
+			it[LANGUAGE_PREF] = param 
+		}
+	}	
+	fun getLanguage(): Flow<Int> {	
+		return context.dataStore.data.map { it[LANGUAGE_PREF] ?: 0 }
+	}	
+}  
+
+// 사용법
+lateinit var settingPreference
+
+onCreate() {
+	settingPreference = SettingPreference(this)
+	GlobalScope.launch {
+		settingPreference.getLanguage().collect { nLanugage ->
+			println(nLanugage)
+		}
+	}
+	
+}
+onSave(nParam:Int) {
+	lifecycleScope.launch {
+		settingPreference.setLanguage(nParam)
+	}
+}
