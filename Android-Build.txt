@@ -1,0 +1,3 @@
+Android Gradle Plugin의 custom버전은 아래의 글을 참고하면 쉽게 작성할수 있다.
+
+https://www.kodeco.com/22198417-gradle-plugin-tutorial-for-android-getting-started
