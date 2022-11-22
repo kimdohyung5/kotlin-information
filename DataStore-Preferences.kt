@@ -166,7 +166,28 @@ AppModule.kt
 		@ApplicationContext context: Context
 	    ) = DataStoreRepository(context = context)
 	}
+	
+5. hilt로 생성하는 방법
+private const val USER_PREFERENCES_NAME = "user_preferences"
+
+@InstallIn(SingletonComponent::class)
+@Module
+object DataStoreModule {
+	@Singleton
+	@Provides
+	fun providePreferencesDataStore(@ApplicationContext appContext: Context): DataStore<Preferences> {
+		return PreferenceDataStoreFactory.create(
+			corruptionHandler = ReplaceFileCorruptionHandler(
+				produceNewData = { emptyPreferences() }
+			),
+			migrations = listOf(SharedPreferencesMigration(appContext, USER_PREFERENCES_NAME)),
+			scope = CoroutineScope(Dispatchers.IO + SupervisorJob()),
+			produceFile = { appContext.preferencesDataStoreFile(USER_PREFERENCES_NAME) }
+		)			
+	}		
+	
+}	
 
 
-5. 위에서 4번 방법이 가장 깔끔한것 같다.. 
+위에서 4번 방법이 가장 깔끔한것 같다.. 
 
