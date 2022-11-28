@@ -66,8 +66,8 @@ implementation("androidx.room:room-ktx:2.4.3")
 id 'kotlin-kapt'
 id 'dagger.hilt.android.plugin'
 
-implementation "com.google.dagger:hilt-android:2.44"
-kapt "com.google.dagger:hilt-android-compiler:2.44"
+implementation "com.google.dagger:hilt-android:2.44.2"
+kapt "com.google.dagger:hilt-android-compiler:2.44.2"
 
 // hiltViewModel in compose ex) aa = hiltViewModel()
 implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
