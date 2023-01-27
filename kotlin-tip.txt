@@ -8,3 +8,12 @@
         ]
     }
     
+오류메세지 : @HiltAndroidApp to have a value. Did you forget to apply the Gradle Plugin? 
+대응방법: 
+kapt {
+    javacOptions {
+        option("-Adagger.fastInit=ENABLED")
+        option("-Adagger.hilt.android.internal.disableAndroidSuperclassValidation=true")
+    }
+}
+참고 사이트 : https://smg7.tistory.com/m/117
