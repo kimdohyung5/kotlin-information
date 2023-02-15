@@ -17,3 +17,13 @@ kapt {
     }
 }
 참고 사이트 : https://smg7.tistory.com/m/117
+
+
+library를 올려야 할때 아래의 옵션을 고민하자.
+오류메세지: DateTimeFormatter.ofPattern나 LocalDateTime.parse가 옵션이 너무 낮다고 complain할때에.. 사용하기.
+compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+
+        coreLibraryDesugaringEnabled true
+    }
