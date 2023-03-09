@@ -1,0 +1,121 @@
+1. AnimatedVisiblity
+	var editable by remember { mutableStateOf(true) }
+	AnimatedVisiblity(visible = editable) {
+		Text( text = "Edit")
+	}
+	
+2. MutableTransitionState으로 관리하기
+	val state = remember {
+		MutableTransitionState(false).apply {
+			targetState = true 
+		}
+	}
+	Column {
+		AnimatedVisiblity(visibleState = state) {
+			Text( text = "Hello, world!")
+		}
+		
+		Text(
+			text = when {
+				state.isIdle && state.currentState -> "Visible"
+				!state.isIdle && state.currentState -> "Disappearing"
+				state.isIdle && !state.currentState -> "Invisible"
+				else -> "Appearing"
+			}
+		)
+	}
+	
+3. AnimatedVisiblity(
+		visible = visible, 
+		enter = fadeIn(),
+		exit = fadeOut()
+	) {
+		val background by transition.animateColor { state ->
+			if(state == EnterExitState.Visible) Color.Blue else Color.Gray
+		}
+		Box(modifier = Modifier.size(128.dp).background(background)
+		
+	Row {
+		var count by remember { mutableStateOf(0) }
+		Button( onClick = { count ++}) {
+			Text("Add")
+		}
+		AnimatedContent(targetState= count) { targetCount ->
+			Text( text = "Count $targetCount" )
+		}
+	}
+	
+4. Crossfade
+	var currentPage by remember { mutableStateOf("A") }
+	Crossfade(targetState = currentPage) { screen ->
+		when( screen ) {
+			"A" -> Text("Page A")
+			"B" -> Text("Page B")
+		}
+	}
+	
+5. AnimateAsState
+	val alpha: Float by animateFloatAsState( if( enabled) 1f else 0.5f)
+	Box(
+		Modifier.fillMaxSize()
+			.graphicsLayer(alpha = alpha)
+			.background(Color.Red)
+	)
+	
+6. Animatable
+	val color = remember { Animatable(Color.Gray) }
+	LaunchedEffect(ok) {
+		color.animateTo(if(ok) Color.Green else Color.Red )
+	}
+	Box(Modifier.fillMaxSize().background(color.value)
+	
+7. updateTransition
+	var selected by remember { mutableStateOf(false) }
+	
+	val transition = updateTransition(selected)
+	val borderColor by transition.animateColor { isSelected ->
+		if(isSelected) Color.Magenta else Color.White
+	}
+	val elevation by transition.animateDp { isSelected ->
+		if(isSelected) 10.dp else 2.dp
+	}
+	Surface(
+		onClick = { selected = !selected },
+		shape = RoundedCornerShape(8.dp),
+		border = BorderStroke(2.dp, borderColor),
+		elevation = elevation
+	) {
+		Column( modifier = Modifier.fillMaxSize().padding(16.dp)) {
+			Text(text = "Hello, World")
+			transition.AnimatedVisiblity(
+				visible = { targetSelected -> targetSelected },
+				enter = expandVertically(), exit = shrinkVertically()
+			) {
+				Text( text = "Is is find today")
+			}
+			
+			transition.AnimatedContent { targetState ->
+				if( targetState) {
+					Text( text = "Selected")
+				} else {
+					Icon(imageVector = Icons.Default.Phone, contentDescription = null)
+				}
+			}
+		
+		}
+		
+	}
+	
+8. rememberInfiniteTransition
+	val infiniteTransition = rememberInfiniteTransition()
+	val color by infiniteTransition.animateColor(
+		initialValue = Color.Red, 
+		targetValue = Color.Green,
+		animationSpec = infiniteRepeatable(
+			animation = tween(1000, easing = LinearEasing),
+			repeatMode = RepeatMode.Reverse
+		)
+	)
+	Box(Modifier.fillMaxSize().background(color))
+  
+  
