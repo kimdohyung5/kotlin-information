@@ -1,17 +1,34 @@
+
+현재 생각했을때는 첫번째만 써도 괞찮을듯하다..
+
+1. 첫번째 예
 fun NavHostController.navigateSingleTopTo(route: String) =
     this.navigate(route) {
-        // Pop up to the start destination of the graph to
-        // avoid building up a large stack of destinations
-        // on the back stack as users select items
-   
         popUpTo(
             this@navigateSingleTopTo.graph.findStartDestination().id
         ) {
             saveState = true
         }
-        // Avoid multiple copies of the same destination when
-        // reselecting the same item
         launchSingleTop = true
-        // Restore state when reselecting a previously selected item
         restoreState = true
     }
+
+2. 두번째 예
+fun navigateToBottomBarRoute(route: String) {
+        if (route != currentRoute) {
+            navController.navigate(route) {
+                launchSingleTop = true
+                restoreState = true
+             
+                popUpTo(findStartDestination(navController.graph).id) {
+                    saveState = true
+                }
+            }
+        }
+    }
+private val NavGraph.startDestination: NavDestination?
+    get() = findNode(startDestinationId)
+    
+private tailrec fun findStartDestination(graph: NavDestination): NavDestination {
+    return if (graph is NavGraph) findStartDestination(graph.startDestination!!) else graph
+}
