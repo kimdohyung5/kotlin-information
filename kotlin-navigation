@@ -32,3 +32,25 @@ private val NavGraph.startDestination: NavDestination?
 private tailrec fun findStartDestination(graph: NavDestination): NavDestination {
     return if (graph is NavGraph) findStartDestination(graph.startDestination!!) else graph
 }
+
+3. 번째 (첫번째랑 동일함)
+class JetnewsNavigationActions(navController: NavHostController) {
+    val navigateToHome: () -> Unit = {
+        navController.navigate(JetnewsDestinations.HOME_ROUTE) {
+            popUpTo(navController.graph.findStartDestination().id) {
+                saveState = true
+            }
+            launchSingleTop = true
+            restoreState = true
+        }
+    }
+    val navigateToInterests: () -> Unit = {
+        navController.navigate(JetnewsDestinations.INTERESTS_ROUTE) {
+            popUpTo(navController.graph.findStartDestination().id) {
+                saveState = true
+            }
+            launchSingleTop = true
+            restoreState = true
+        }
+    }
+}
