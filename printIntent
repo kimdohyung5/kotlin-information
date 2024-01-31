@@ -1,0 +1,5 @@
+intent.extras?.let { bundle ->
+	for(key in bundle.keySet()) {
+		println("kimdo MyClassTestAnsweringActivity.kt key=${key} value=${bundle.getString(key)}")
+	}
+}
