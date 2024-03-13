@@ -1,0 +1,25 @@
+@RunWith(AndroidJUnit4::class)
+@SmallTest
+class ShoppingTest {
+	private lateinit var database: ShoppingItemDatabase
+	private lateinit var dao: ShoppingDao
+
+	@Before
+	fun setup() {
+		database = Room.inMemoryDatabaseBuilder(
+			ApplicationProvider.getApplicationContext(), 
+			ShoppingItemDatabase::class.java
+		).allowMainThreadQueries().build()		
+		dao = database.shoppingDao()
+	}
+	
+	@After 
+	fun teardown() {
+		database.close()
+	}	
+	
+	@Test
+	fun insertShoppingItem() = runBlockingTest {		// TestCoroutineScope		
+		
+	}
+}
