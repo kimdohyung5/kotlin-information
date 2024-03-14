@@ -23,3 +23,36 @@ class ShoppingTest {
 		
 	}
 }
+
+///////////////////////////////////////////////////////////////////////////////////////
+//// 클래스를 생성하기..
+@ExperimentalCoroutineApi
+class MainCoroutineRule(
+	val testDispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher()
+) : TestWatcher() {
+	
+	override fun starting(description: Description?) {
+		super.starting(description)
+		Dispatchers.setMain(testDispatcher)
+	}
+	
+	override fun finished(description: Description?) {
+		super.finished(description)
+		Dispatchers.resetMain()
+		testDispatcher.cleanupTestCoroutines()
+	}
+	
+	fun runBlockingTest(block: suspend TestCoroutineScope.()->Unit) {
+		return testDispatcher.runBlockingTest(block)
+	}
+}
+
+//////////////////////////////////////////////////////////////////////
+///////// 위의 클래스를 사용하기
+class SomethingViewModelTest {
+	@get:Rule val instantTaskExecutorRule = InstantTaskExecutorRule()
+	@get:Rule val mainCoroutineRule = MainCoroutineRule()
+
+
+
+참고한 자료: https://tech.kakao.com/2021/11/08/test-code/
