@@ -287,4 +287,8 @@ val launcher = rememberLauncherActivityForResult(
 launcher.launch ( Manifest.permission.POST_NOTIFICATIONS )
 ---------------------------------------------------------------------------
 
+timber설정하는 방법
+if (BuildConfig.DEBUG) {
+    Timber.plant(TimberDebugTree())
+}
 
