@@ -1,0 +1,2 @@
+액티버티의 backstack의 리스트를 조회할때 사용한다. 
+adb shell dumpsys activity activities | grep mathpid | grep -i Hist
