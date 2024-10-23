@@ -30,3 +30,15 @@ fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         .addConverterFactory(json.asConverterFactory(contentType))
         .build()
 }
+
+
+
+
+Gson 으로 parsing하기
+
+var jsonString = """{"id":1,"description":"Test"}""";
+var testModel = gson.fromJson(jsonString, TestModel::class.java)
+Assert.assertEquals(testModel.id, 1)
+Assert.assertEquals(testModel.description, "Test")
+
+
