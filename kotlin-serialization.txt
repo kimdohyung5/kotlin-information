@@ -41,4 +41,31 @@ var testModel = gson.fromJson(jsonString, TestModel::class.java)
 Assert.assertEquals(testModel.id, 1)
 Assert.assertEquals(testModel.description, "Test")
 
+or with kotlinx serialization
+implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2")
 
+import kotlinx.serialization.*
+import kotlinx.serialization.json.*
+
+@Serializable
+data class User(val name: String, val age: Int)
+// decoding
+fun main() {
+    val json = "{ \\\\"name\\\\": \\\\"John\\\\", \\\\"age\\\\": 30 }"
+    val user = Json.decodeFromString<User>(json)
+    println(user) // User(name=John, age=30)
+}
+
+
+or 
+import kotlinx.serialization.*
+import kotlinx.serialization.json.*
+
+@Serializable
+data class User(val name: String, val age: Int)
+// encoding
+fun main() {
+    val user = User("John", 30)
+    val json = Json.encodeToString(user)
+    println(json) // {"name":"John","age":30}
+}
